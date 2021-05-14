@@ -27,11 +27,11 @@ def judge(choice_user, choice_machine):
         print('Machine is winner')
 
 def text_choice(choice):
-    rock_papper_scissors = {0: 'Rock', 1: 'Papper', 2: 'Scissors'}
-    return rock_papper_scissors[choice]
+    rock_paper_scissors = {0: 'Rock', 1: 'Papper', 2: 'Scissors'}
+    return rock_paper_scissors[choice]
 
 
-def rock_papper_scissors(choice_user):
+def rock_paper_scissors(choice_user):
     if(choice_user >= 0 and choice_user <= 2):
         choice_machine = random.choice([0, 1, 2])
         print('\nYou: ' + text_choice(choice_user) + ' - Machine: ' + text_choice(choice_machine))
@@ -40,22 +40,45 @@ def rock_papper_scissors(choice_user):
         print('The selection is not valid')
 
 
+def cacth_choice():
+    try:
+        choice = input('''
+    [0] Rock
+    [1] Papper
+    [2] Scissors
+
+What do you selection? ''')
+
+        if len(choice) == 0:
+            raise ValueError('You must entry some next options')
+
+        try:
+            choice = int(choice)
+        except ValueError:
+            print('You must entry some next numbers [0] Rock - [1] Paper - [2] Scssors')
+            return cacth_choice()
+
+        if choice < 0 or choice > 2:
+            raise ValueError('You must entry some next numbers [0] Rock - [1] Paper - [2] Scssors')
+
+        return choice
+
+    except ValueError as ve:
+        print(ve)
+        return cacth_choice()
+
+
 def run():
-    print("\nLet's go to play Rock, Papper, Scissors")
+    print("\nLet's go to play Rock, Paper, Scissors")
 
     round_number = 1
 
     while(user_round_winner < 3 and machine_round_winner < 3):
         print('\nRound ' + str(round_number))
 
-        choice = int(input('''
-[0] Rock
-[1] Papper
-[2] Scissors
-
-What do you selection? '''))
+        choice = int(cacth_choice())
         
-        rock_papper_scissors(choice)
+        rock_paper_scissors(choice)
 
         round_number +=1
 
